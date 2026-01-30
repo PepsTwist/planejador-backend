@@ -17,7 +17,26 @@ from flask import Flask, request, jsonify
 from flask_cors import CORS
 
 app = Flask(__name__)
-CORS(app)  # Permite chamadas do frontend em GitHub Pages (origem diferente)
+
+# Configurar CORS explicitamente com suporte a ngrok e GitHub Pages
+CORS(app, 
+     resources={r"/api/*": {
+         "origins": ["*"],
+         "methods": ["GET", "POST", "OPTIONS"],
+         "allow_headers": ["Content-Type", "Authorization"],
+         "supports_credentials": False
+     }})
+
+# Handler para preflight requests (OPTIONS)
+@app.before_request
+def handle_preflight():
+    if request.method == "OPTIONS":
+        response = app.make_default_options_response()
+        response.headers.add("Access-Control-Allow-Origin", "*")
+        response.headers.add("Access-Control-Allow-Methods", "GET,POST,OPTIONS")
+        response.headers.add("Access-Control-Allow-Headers", "Content-Type,Authorization")
+        return response, 200
+    return None
 
 # Caminho para a pasta app (onde está arquivo-base-fixed.py)
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
