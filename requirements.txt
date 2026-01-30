@@ -1,0 +1,16 @@
+# API web do KW Planner
+flask>=3.0.0
+flask-cors>=4.0.0
+gunicorn>=21.0.0
+
+# Dependências do script app/arquivo-base-fixed.py (para o backend conseguir importar e rodar)
+pandas>=2.0.0
+beautifulsoup4>=4.12.0
+curl_cffi>=0.5.0
+groq>=0.4.0
+nltk>=3.8.0
+spacy>=3.7.0
+scikit-learn>=1.3.0
+textstat>=0.7.0
+openpyxl>=3.1.0
+google-ads>=23.0.0
